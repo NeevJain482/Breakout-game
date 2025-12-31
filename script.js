@@ -38,6 +38,41 @@ class Paddle {
   }
 }
 
+class Brick {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.status = 1;
+  }
+  draw(context) {
+    if (this.status == 1) {
+      context.fillStyle = "yellow";
+      context.fillRect(this.x, this.y, this.width, this.height);
+    }
+  }
+}
+// Brick wall
+
+const bricks = [];
+
+function createBrickWall() {
+  const brickRowCount = 4;
+  const brickColumnCount = 8;
+  const brickWidth = 50;
+  const brickHeight = 20;
+  const brickPadding = 10;
+
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; r < brickRowCount; r++) {
+      const x = c * (brickWidth + brickPadding);
+      const y = r * (brickHeight + brickPadding);
+      bricks.push(new Brick(x, y, brickWidth, brickHeight));
+    }
+  }
+}
+
 // Game
 const canvas = document.getElementById("myCanvas");
 const context = canvas.getContext("2d");
@@ -63,7 +98,7 @@ function gameLoop() {
   }
 
   // Ground
-  if(ball.y + ball.radius > canvas.height){
+  if (ball.y + ball.radius > canvas.height) {
     ball.speedY *= -1;
   }
 
@@ -82,6 +117,6 @@ function gameLoop() {
   }
 
   paddle.draw(context);
-  requestAnimationFrame(gameLoop)
+  requestAnimationFrame(gameLoop);
 }
-gameLoop()
+gameLoop();

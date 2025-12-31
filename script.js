@@ -80,6 +80,42 @@ const context = canvas.getContext("2d");
 const ball = new Ball(150, 150, 10, 2, 2);
 const paddle = new Paddle(175, canvas.height - 10, 100, 10, 8);
 
+// Update and draw bricks
+
+function drawBricks() {
+  bricks.forEach((brick) => {
+    if (brick.status === 1) {
+      brick.draw(context);
+      if (
+        ball.x > brick.x &&
+        ball.x < brick.x + brick.width &&
+        ball.y > brick.y &&
+        ball.y < brick.y + brick.height
+      ) {
+        ball.speedY *= -1;
+        brick.status = 0;
+        score += 10;
+        document.getElementById("score").innerHTML = `Score:${score}`;
+      }
+    }
+  });
+}
+
+createBrickWall();
+
+function resetGame() {
+  ball.x = 200;
+  ball.y = 200;
+  ball.speedX = 2;
+  ball.speedY = 2;
+  paddle.x = 175;
+
+  bricks.forEach((brick) => {
+    brick.status = 1;
+  });
+  score = 0;
+}
+
 function gameLoop() {
   context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 

@@ -67,6 +67,20 @@ function gameLoop() {
     ball.speedY *= -1;
   }
 
+  // 3. Paddle collision detection
+  if (
+    ball.x + ball.radius > paddle.x &&
+    ball.x - ball.radius < paddle.x + paddle.width &&
+    ball.y + ball.radius > paddle.y
+  ) {
+    ball.speedY *= -1;
+  }
+
+  if (ball.y + ball.radius > canvas.height) {
+    alert("game over");
+    resetGame();
+  }
+
   paddle.draw(context);
   requestAnimationFrame(gameLoop)
 }

@@ -1,3 +1,5 @@
+let score = 0;
+
 // Ball
 class Ball {
   constructor(x, y, radius, speedX, speedY) {
@@ -80,6 +82,16 @@ const context = canvas.getContext("2d");
 const ball = new Ball(150, 150, 10, 2, 2);
 const paddle = new Paddle(175, canvas.height - 10, 100, 10, 8);
 
+// paddle control
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") paddle.move(-1);
+  else if (event.key === "ArrowRight") paddle.move(1);
+});
+document.addEventListener("keyup", (event) => {
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") paddle.move(0);
+});
+
 // Update and draw bricks
 
 function drawBricks() {
@@ -133,10 +145,10 @@ function gameLoop() {
     ball.speedY *= -1;
   }
 
-  // Ground
-  if (ball.y + ball.radius > canvas.height) {
-    ball.speedY *= -1;
-  }
+//   // Ground
+//   if (ball.y + ball.radius > canvas.height) {
+//     ball.speedY *= -1;
+//   }
 
   // 3. Paddle collision detection
   if (
@@ -146,9 +158,15 @@ function gameLoop() {
   ) {
     ball.speedY *= -1;
   }
+  drawBricks();
 
   if (ball.y + ball.radius > canvas.height) {
     alert("game over");
+    resetGame();
+  }
+
+  if(bricks.every((b)=>b.status == 0)){
+    alert("Congratulations! You are legend");
     resetGame();
   }
 

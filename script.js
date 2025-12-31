@@ -85,8 +85,11 @@ const paddle = new Paddle(175, canvas.height - 10, 100, 10, 8);
 // paddle control
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") paddle.move(-1);
-  else if (event.key === "ArrowRight") paddle.move(1);
+  if (event.key === "ArrowLeft") {
+    if (paddle.x > 0) paddle.move(-1);
+  } else if (event.key === "ArrowRight") {
+    if (paddle.x + paddle.width < canvas.width) paddle.move(1);
+  }
 });
 document.addEventListener("keyup", (event) => {
   if (event.key === "ArrowLeft" || event.key === "ArrowRight") paddle.move(0);
@@ -145,10 +148,10 @@ function gameLoop() {
     ball.speedY *= -1;
   }
 
-//   // Ground
-//   if (ball.y + ball.radius > canvas.height) {
-//     ball.speedY *= -1;
-//   }
+  //   // Ground
+  //   if (ball.y + ball.radius > canvas.height) {
+  //     ball.speedY *= -1;
+  //   }
 
   // 3. Paddle collision detection
   if (
@@ -165,7 +168,7 @@ function gameLoop() {
     resetGame();
   }
 
-  if(bricks.every((b)=>b.status == 0)){
+  if (bricks.every((b) => b.status == 0)) {
     alert("Congratulations! You are legend");
     resetGame();
   }

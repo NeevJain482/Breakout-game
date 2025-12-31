@@ -31,6 +31,23 @@ function gameLoop() {
 
   ball.update();
   ball.draw(context);
+
+  // Ball collision detection
+  // 1. Sides
+  if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+    ball.speedX *= -1;
+  }
+
+  // 2. Top side
+  if (ball.y - ball.radius < 0) {
+    ball.speedY *= -1;
+  }
+
+  // Ground
+  if(ball.y + ball.radius > canvas.height){
+    ball.speedY *= -1;
+  }
+
   requestAnimationFrame(gameLoop)
 }
 gameLoop()

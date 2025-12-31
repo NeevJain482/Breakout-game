@@ -20,11 +20,30 @@ class Ball {
   }
 }
 
+//Paddle
+class Paddle {
+  constructor(x, y, width, height, speed) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+  }
+  draw(context) {
+    context.fillStyle = "orange";
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
+  move(direction) {
+    this.x += this.speed * direction;
+  }
+}
+
 // Game
 const canvas = document.getElementById("myCanvas");
 const context = canvas.getContext("2d");
 
 const ball = new Ball(150, 150, 10, 2, 2);
+const paddle = new Paddle(175, canvas.height - 10, 100, 10, 8);
 
 function gameLoop() {
   context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
@@ -48,6 +67,7 @@ function gameLoop() {
     ball.speedY *= -1;
   }
 
+  paddle.draw(context);
   requestAnimationFrame(gameLoop)
 }
 gameLoop()
